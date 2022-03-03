@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  postgres:
+    image: mysql:8.0
+    container_name: 'mysql'
+    restart: always
+
+    environment:
+      MYSQL_DATABASE: 'mercado-livro'
+      MYSQL_USER: 'guest'
+      MYSQL_PASSWORD: 'guest'
+      MYSQL_ROOT_PASSWORD: 'guest'
+    ports:
+      - "3306:3306"
