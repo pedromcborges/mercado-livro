@@ -19,7 +19,7 @@ class CustomerController(
     }
 
     @GetMapping("/{id}")
-    fun getCustomer(@PathVariable id: String): CustomerModel {
+    fun getCustomer(@PathVariable id: Int): CustomerModel {
         return service.getCustomer(id)
     }
 
@@ -31,13 +31,13 @@ class CustomerController(
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun update(@PathVariable id: String, @RequestBody customer: UpdateCustomerRequest) {
+    fun update(@PathVariable id: Int, @RequestBody customer: UpdateCustomerRequest) {
         service.update(customer.toCustomerModel(id))
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun delete(@PathVariable id: String) {
+    fun delete(@PathVariable id: Int) {
         service.delete(id)
     }
 }
