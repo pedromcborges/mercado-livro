@@ -7,6 +7,10 @@ data class UpdateCustomerRequest(
     var email: String
 ) {
     fun toCustomerModel(previousCustomer: CustomerModel): CustomerModel {
-        return CustomerModel(previousCustomer.id, this.name, this.email, previousCustomer.status)
+        return CustomerModel(
+            previousCustomer.id,
+            this.name,
+            this.email,
+            previousCustomer.status)
     }
 }

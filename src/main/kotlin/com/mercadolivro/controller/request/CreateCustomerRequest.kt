@@ -8,6 +8,9 @@ data class CreateCustomerRequest(
     var email: String
 ) {
     fun toCustomerModel(): CustomerModel {
-        return CustomerModel(name = this.name, email = this.email, status = CustomerStatus.ACTIVE)
+        return CustomerModel(
+            name = this.name,
+            email = this.email,
+            status = CustomerStatus.ACTIVE)
     }
 }

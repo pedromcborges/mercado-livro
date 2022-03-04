@@ -9,11 +9,11 @@ data class UpdateBookRequest(
 ) {
     fun toBookModel(previousBook: BookModel): BookModel {
         return BookModel(
-            previousBook.id,
-            this.title ?: previousBook.title,
-            this.price ?: previousBook.price,
-            previousBook.status,
-            previousBook.customer
+            id = previousBook.id,
+            title = this.title ?: previousBook.title,
+            price= this.price ?: previousBook.price,
+            status = previousBook.status,
+            customer = previousBook.customer
         )
     }
 }
