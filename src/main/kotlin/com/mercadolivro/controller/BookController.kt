@@ -15,6 +15,13 @@ class BookController(
     val customerService: CustomerService
 ) {
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    fun create(@RequestBody createBookRequest: CreateBookRequest) {
+        val customer = customerService.findById(createBookRequest.customerId)
+        bookService.create(createBookRequest.toBookModel(customer))
+    }
+
     @GetMapping
     fun findAll(): List<BookModel> {
         return bookService.findAll()
@@ -28,13 +35,6 @@ class BookController(
     @GetMapping("/{id}")
     fun findById(@PathVariable id: Int): BookModel {
         return bookService.findById(id)
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody createBookRequest: CreateBookRequest) {
-        val customer = customerService.getById(createBookRequest.customerId)
-        bookService.create(createBookRequest.toBookModel(customer))
     }
 
     @PutMapping("/{id}")

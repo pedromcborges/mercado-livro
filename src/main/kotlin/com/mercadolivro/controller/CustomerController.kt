@@ -13,20 +13,20 @@ class CustomerController(
     val customerService: CustomerService
 ) {
 
-    @GetMapping
-    fun getAll(@RequestParam name: String?): List<CustomerModel> {
-        return customerService.getAll(name)
-    }
-
-    @GetMapping("/{id}")
-    fun getCustomer(@PathVariable id: Int): CustomerModel {
-        return customerService.getById(id)
-    }
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody createCustomerRequest: CreateCustomerRequest) {
         customerService.create(createCustomerRequest.toCustomerModel())
+    }
+
+    @GetMapping
+    fun findAll(@RequestParam name: String?): List<CustomerModel> {
+        return customerService.findAll(name)
+    }
+
+    @GetMapping("/{id}")
+    fun findById(@PathVariable id: Int): CustomerModel {
+        return customerService.findById(id)
     }
 
     @PutMapping("/{id}")

@@ -13,6 +13,6 @@ data class CreateBookRequest(
     var customerId: Int
 ) {
     fun toBookModel(customer: CustomerModel): BookModel {
-        return BookModel(title = title, price = price, status = BookStatus.ACTIVE, costumerId = customer)
+        return BookModel(title = title, price = price, status = BookStatus.ACTIVE, customer = customer)
     }
 }

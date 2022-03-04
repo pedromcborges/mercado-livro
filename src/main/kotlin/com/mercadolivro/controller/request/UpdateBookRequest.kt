@@ -13,7 +13,7 @@ data class UpdateBookRequest(
             this.title ?: previousBook.title,
             this.price ?: previousBook.price,
             previousBook.status,
-            previousBook.costumerId
+            previousBook.customer
         )
     }
 }
