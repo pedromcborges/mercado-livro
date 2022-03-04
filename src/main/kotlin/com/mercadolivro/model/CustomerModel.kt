@@ -1,5 +1,6 @@
 package com.mercadolivro.model
 
+import com.mercadolivro.controller.response.CustomerResponse
 import com.mercadolivro.enums.CustomerStatus
 import javax.persistence.*
 
@@ -18,5 +19,14 @@ data class CustomerModel(
 
     @Column
     @Enumerated(EnumType.STRING)
-    var status: CustomerStatus? = null
-)
+    var status: CustomerStatus
+) {
+    fun toResponse(): CustomerResponse {
+        return CustomerResponse(
+            id = this.id,
+            name = this.name,
+            email = this.email,
+            status = this.status
+        )
+    }
+}

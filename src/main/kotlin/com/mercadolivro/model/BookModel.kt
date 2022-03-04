@@ -1,5 +1,6 @@
 package com.mercadolivro.model
 
+import com.mercadolivro.controller.response.BookResponse
 import com.mercadolivro.enums.BookStatus
 import java.math.BigDecimal
 import javax.persistence.*
@@ -38,4 +39,14 @@ data class BookModel(
         status: BookStatus? = null): this(id, title, price, customer) {
             this.status = status
         }
+
+    fun toResponse(): BookResponse {
+        return BookResponse(
+            id = this.id,
+            title = this.title,
+            price = this.price,
+            status = this.status,
+            customer = this.customer
+        )
+    }
 }
