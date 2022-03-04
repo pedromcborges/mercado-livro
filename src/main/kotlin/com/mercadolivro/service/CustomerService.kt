@@ -1,6 +1,7 @@
 package com.mercadolivro.service
 
 import com.mercadolivro.enums.BookStatus
+import com.mercadolivro.enums.CustomerStatus
 import com.mercadolivro.model.CustomerModel
 import com.mercadolivro.repository.BookRepository
 import com.mercadolivro.repository.CustomerRepository
@@ -46,6 +47,8 @@ class CustomerService(
         }
         bookRepository.saveAll(customerBooks)
 
-        customerRepository.deleteById(id)
+        customer.status = CustomerStatus.INACTIVE
+
+        customerRepository.save(customer)
     }
 }
