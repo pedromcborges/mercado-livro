@@ -5,6 +5,8 @@ import com.mercadolivro.enums.CustomerStatus
 import com.mercadolivro.model.CustomerModel
 import com.mercadolivro.repository.BookRepository
 import com.mercadolivro.repository.CustomerRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -14,11 +16,11 @@ class CustomerService(
     val bookRepository: BookRepository
 ) {
 
-    fun findAll(name: String?): List<CustomerModel> {
+    fun findAll(name: String?, pageable: Pageable): Page<CustomerModel> {
         name?.let {
-            return customerRepository.findAllByNameContaining(name)
+            return customerRepository.findAllByNameContaining(name, pageable)
         }
-        return customerRepository.findAll().toList()
+        return customerRepository.findAll(pageable)
     }
 
     fun findById(id: Int): CustomerModel {
