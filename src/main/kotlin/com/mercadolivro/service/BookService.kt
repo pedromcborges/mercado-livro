@@ -1,7 +1,9 @@
 package com.mercadolivro.service
 
 import com.mercadolivro.enums.BookStatus
+import com.mercadolivro.exception.NotFoundException
 import com.mercadolivro.model.BookModel
+import com.mercadolivro.model.ErrorCode
 import com.mercadolivro.repository.BookRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -21,7 +23,8 @@ class BookService(
     }
 
     fun findById(id: Int): BookModel {
-        return bookRepository.findById(id).orElseThrow()
+        return bookRepository.findById(id)
+            .orElseThrow { NotFoundException(ErrorCode.BOOK_NOT_EXISTS).withParameters(id.toString()) }
     }
 
     fun create(book: BookModel) {

@@ -2,7 +2,9 @@ package com.mercadolivro.service
 
 import com.mercadolivro.enums.BookStatus
 import com.mercadolivro.enums.CustomerStatus
+import com.mercadolivro.exception.NotFoundException
 import com.mercadolivro.model.CustomerModel
+import com.mercadolivro.model.ErrorCode
 import com.mercadolivro.repository.BookRepository
 import com.mercadolivro.repository.CustomerRepository
 import org.springframework.data.domain.Page
@@ -24,7 +26,8 @@ class CustomerService(
     }
 
     fun findById(id: Int): CustomerModel {
-        return customerRepository.findById(id).orElseThrow()
+        return customerRepository.findById(id)
+            .orElseThrow { NotFoundException(ErrorCode.CUSTOMER_NOT_EXISTS).withParameters(id.toString()) }
     }
 
     fun create(customer: CustomerModel) {
@@ -32,7 +35,7 @@ class CustomerService(
     }
 
     fun update(customer: CustomerModel) {
-        if(!customerRepository.existsById(customer.id!!)) {
+        if (!customerRepository.existsById(customer.id!!)) {
             throw Exception()
         }
 
@@ -41,7 +44,8 @@ class CustomerService(
 
     @Transactional
     fun delete(id: Int) {
-        val customer = customerRepository.findById(id).orElseThrow()
+        val customer = customerRepository.findById(id)
+            .orElseThrow { NotFoundException(ErrorCode.CUSTOMER_NOT_EXISTS).withParameters(id.toString()) }
 
         val customerBooks = bookRepository.findByCustomer(customer)
         customerBooks.forEach {

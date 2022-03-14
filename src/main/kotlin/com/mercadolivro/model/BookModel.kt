@@ -2,6 +2,7 @@ package com.mercadolivro.model
 
 import com.mercadolivro.controller.response.BookResponse
 import com.mercadolivro.enums.BookStatus
+import com.mercadolivro.exception.BadRequestException
 import java.math.BigDecimal
 import javax.persistence.*
 
@@ -27,18 +28,20 @@ data class BookModel(
     var status: BookStatus? = null
         set(value) {
             if (field == BookStatus.CANCELED || field == BookStatus.DELETED) {
-                throw Exception("Cannot update books with status $field")
+                throw BadRequestException(ErrorCode.BOOK_CANNOT_BE_UPDATED_WITH_STATUS).withParameters(field!!.name)
             }
             field = value
         }
 
-    constructor(id: Int? = null,
+    constructor(
+        id: Int? = null,
         title: String,
         price: BigDecimal,
         customer: CustomerModel? = null,
-        status: BookStatus? = null): this(id, title, price, customer) {
-            this.status = status
-        }
+        status: BookStatus? = null
+    ) : this(id, title, price, customer) {
+        this.status = status
+    }
 
     fun toResponse(): BookResponse {
         return BookResponse(
